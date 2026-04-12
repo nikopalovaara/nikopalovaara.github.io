@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Niko Palovaara - Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <nav>
+    <a class="nav-name" href="#">Niko Palovaara</a>
+    <ul class="nav-links" id="navLinks"></ul>
+    <button class="nav-toggle" aria-label="Open menu" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-drawer" id="navDrawer">
+    <button class="nav-drawer-close" aria-label="Close menu" onclick="closeNav()">
+      <span></span><span></span>
+    </button>
+    <div id="navDrawerLinks"></div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text" style="max-width: 60%;">
+        <div class="hero-photo-col">
+          <div class="hero-photo-wrap">
+            <img src="data:image/png;base64,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" alt="Niko Palovaara" class="hero-photo" />
+          </div>
+        </div>
+        <div class="hero-label">Sales & Management · Finland, Helsinki</div>
+        <h1>Building revenue, teams, and solutions <em>from first call to signed contract.</em></h1>
+        <p class="hero-sub">
+          Over 10 years of sales and account management experience across domains with information technology - combined with hands-on technical skills from one of the world's
+          most selective higher education institutions in computer science.
+        </p>
+        <div class="hero-cta-row">
+          <a href="#experience" class="btn-primary">See my background</a>
+          <a href="#contact" class="btn-ghost">Get in touch</a>
+        </div>
+      </div>
+</div>
+    <div class="hero-bg-text" aria-hidden="true">NP</div>
+  </section>
+
+  <!-- ── ACCOMPLISHMENTS ── -->
+  <section id="accomplishments" class="section--dark">
+    <div class="section-label">Accomplishments</div>
+    <h2 class="section-title">A career measured<br>in results.</h2>
+    <p class="section-intro">
+      From leading Finland's best-performing sales floor to managing a portfolio of 400+ SME
+      accounts at Elisa - the thread is consistent: real outcomes, not just activity.
+    </p>
+    <div class="stats-grid fade-in" id="statsGrid1"></div>
+    <div class="stats-grid stats-grid--last fade-in" id="statsGrid2"></div>
+  </section>
+
+  <!-- ── SELECTED WORK ── -->
+  <section id="work">
+    <div class="section-label">Selected Work</div>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-intro">
+      Each project here is framed around the business problem,
+      the approach taken, and the outcome delivered.
+    </p>
+    <div class="cases-grid fade-in" id="casesGrid"></div>
+  </section>
+
+  <!-- ── EXPERIENCE ── -->
+  <section id="experience">
+    <div class="section-label">Experience</div>
+    <h2 class="section-title">Where I've worked<br>and what I built.</h2>
+    <div class="timeline fade-in" id="timeline"></div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section id="skills" class="section--dark">
+    <div class="section-label">Skills</div>
+    <h2 class="section-title">What I bring<br>to the table.</h2>
+    <p class="section-intro">
+      An unusual combination: deep customer-facing experience across complex sales cycles,
+      with genuine technical literacy earned through intensive hands-on training.
+    </p>
+    <div class="skills-layout fade-in" id="skillsLayout"></div>
+    <div class="lang-row fade-in" id="langRow"></div>
+  </section>
+
+  <!-- ── REFERENCES ── -->
+  <section id="referrals">
+    <div class="section-label">References</div>
+    <h2 class="section-title">People who can<br>vouch for my work.</h2>
+    <div class="referrals-intro">
+      References are available from every role in my career. Former managers, partners
+      and colleagues across career are happy to speak
+      to my work - just ask and I'll connect you directly.
+    </div>
+    <div class="referrals-grid fade-in" id="referralsGrid"></div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Let's talk.</h2>
+    <p class="section-intro">
+      Open to new opportunities and interesting conversations.
+    </p>
+
+    <div class="contact-layout fade-in">
+      <div class="contact-info">
+
+        <a id="emailLink" href="#" class="contact-link">
+          <div>
+            <span class="contact-link-label">Email</span>
+            <span id="emailVal" class="contact-value contact-hidden">Click to reveal</span>
+          </div>
+          <div class="hp-field">
+            <a href="/cdn-cgi/l/email-protection#4b2c24242c272e0b2c262a222765282426">Email</a>
+          </div>
+        </a>
+
+        <a id="phoneLink" href="#" class="contact-link">
+          <div>
+            <span class="contact-link-label">Phone</span>
+            <span id="phoneVal" class="contact-value contact-hidden">Click to reveal</span>
+          </div>
+          <div class="hp-field">
+            <a href="tel:+358509999999">Phone</a>
+          </div>
+        </a>
+
+        <div class="contact-link contact-link--badge">
+          <div>
+            <span class="contact-link-label">LinkedIn</span>
+            <a href="https://fi.linkedin.com/in/nikopalovaara" target="_blank" rel="noopener" class="li-custom-badge">
+              <div class="li-badge-avatar">
+                <img id="liAvatar" alt="Niko Palovaara" class="li-badge-avatar-img" />
+              </div>
+              <div class="li-badge-body">
+                <div class="li-badge-name">Niko Palovaara</div>
+                <div class="li-badge-title">Solving problems and providing solutions</div>
+                <div class="li-badge-meta">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                  <span>View profile</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-link contact-link--static">
+          <div>
+            <span class="contact-link-label">Based in</span>
+            Helsinki, Finland
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span>© 2026 Niko Palovaara</span>
+    <div class="footer-links">
+      <a href="https://linkedin.com/in/nikopalovaara" target="_blank" rel="noopener">LinkedIn</a>
+      <a id="footerEmail" href="#">Email</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
