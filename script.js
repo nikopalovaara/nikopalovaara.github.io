@@ -39,13 +39,7 @@ const CASES = [
     body:   'Translated an idea into a product and business by working with domain experts to find product-market fit, assembling the right team, and successfully communicating the vision to investors to raise initial funding.',
     result: 'From idea to funded product - with paying customers in the pipeline.',
   },
-  {
-    tag:    'Coming soon',
-    title:  'Next project',
-    body:   'More to be added here soon.',
-    result: 'Work in progress',
-    modifier: 'coming-soon',
-  },
+
 ];
 
 const TIMELINE = [
@@ -91,7 +85,7 @@ const TIMELINE = [
     company: 'Tehotytyt Rakennusapu Ky',
     bullets: [
       'Led teams of 3–5 people on construction contracts, accountable for delivery and quality',
-      'Handled full small-business operations: invoicing, procurement, resourcing, recruitment and onboarding',
+      'Handled full small-business operations: invoicing, procurement, resourcing, recruitment and on/offboarding',
       'Built the company\'s reputation as a reliable contractor in new project relationships',
     ],
     highlight: 'Built a new company\'s reputation as a trusted contractor from the ground up',
@@ -110,23 +104,33 @@ const TIMELINE = [
 ];
 
 const SKILLS = {
-  professional: [
-    { name: 'Account management',    pct: 95 },
-    { name: 'B2B solution sales',    pct: 92 },
-    { name: 'Customer relationships',pct: 95 },
-    { name: 'Team leadership',       pct: 80 },
-    { name: 'Project coordination',  pct: 75 },
-    { name: 'Problem solving',       pct: 88 },
+  groups: [
+    {
+      category: 'Sales & Revenue',
+      proof: 'Elisa · Gigantti · Veikon Kone · €15M+ career revenue',
+      skills: ['B2B & SME solution sales', 'Account management', 'Pipeline management', 'Consultative selling', 'Contract negotiation', 'Upsell & cross-sell', 'New business development', 'Sales forecasting'],
+    },
+    {
+      category: 'Customer & Relationships',
+      proof: 'Top-rated SME portfolio at Elisa · 400+ accounts managed',
+      skills: ['Client relationship management', 'RFP/RFQ responses, SOWs, and contract documentation', 'Stakeholder management', 'Executive presentations', 'Retention & churn reduction', 'NPS management'],
+    },
+    {
+      category: 'Leadership & Operations',
+      proof: 'Startup founder · Site supervisor · Full P&L responsibility',
+      skills: ['Team leadership', 'Project coordination', 'Recruitment & on/offboarding', 'Budget & P&L management', 'Invoicing & procurement', 'Cross-functional collaboration', 'Market & competitor analysis'],
+    },
+    {
+      category: 'CRM & Business Tools',
+      proof: 'Elisa · Veikon Kone · Gigantti · Google Certified',
+      skills: ['Salesforce CRM', 'Google Workspace', 'MS Office Suite', 'VoIP systems', 'Windows AD & Server', 'macOS · iOS · Android'],
+    },
+    {
+      category: 'Technical & Development',
+      proof: 'Hive Helsinki (42 Network) · Personal projects · GitHub',
+      skills: ['C programming', 'Unix / Bash', 'SQL', 'Git & version control', 'Algorithms & data structures', 'Memory management', 'React', 'Node.js', 'Python'],
+    },
   ],
-  technical: [
-    { name: 'C programming',     pct: 70 },
-    { name: 'SQL',               pct: 65 },
-    { name: 'Unix / Bash',       pct: 68 },
-    { name: 'Git',               pct: 65 },
-    { name: 'Salesforce',        pct: 72 },
-    { name: 'Google Workspace',  pct: 85 },
-  ],
-  also: ['React', 'Node.js', 'Python', 'AI', 'Windows AD', 'VoIP', 'MS Office Suite', 'Windows Server', 'MacOS / iOS', 'Android'],
 };
 
 const LANGUAGES = [
@@ -187,6 +191,7 @@ function renderCases() {
       <div class="case-result">${c.result}</div>
     </div>`).join('');
   document.getElementById('casesGrid').innerHTML = html;
+  document.getElementById('casesGrid').insertAdjacentHTML('afterend', '<p class="cases-coming-soon">More projects coming soon.</p>');
 }
 
 function renderTimeline() {
@@ -197,38 +202,46 @@ function renderTimeline() {
         <div class="timeline-org">${t.org}</div>
       </div>
       <div class="timeline-content">
-        <h3>${t.title}</h3>
-        <div class="timeline-company">${t.company}</div>
-        <ul>${t.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
-        ${t.highlight ? `<div class="timeline-highlight">${t.highlight}</div>` : ''}
+        <div class="timeline-header" role="button" tabindex="0" aria-expanded="false">
+          <div>
+            <h3>${t.title}</h3>
+            <div class="timeline-company">${t.company}</div>
+          </div>
+          <span class="timeline-toggle" aria-hidden="true"></span>
+        </div>
+        <div class="timeline-body">
+          <div class="timeline-body-inner">
+            <ul>${t.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
+            ${t.highlight ? `<div class="timeline-highlight">${t.highlight}</div>` : ''}
+          </div>
+        </div>
       </div>
     </div>`).join('');
   document.getElementById('timeline').innerHTML = html;
+
+  // Accordion behaviour — only active on mobile
+  document.querySelectorAll('.timeline-header').forEach(header => {
+    function toggle() {
+      if (window.innerWidth > 700) return; // desktop: always open
+      const isOpen = header.getAttribute('aria-expanded') === 'true';
+      header.setAttribute('aria-expanded', String(!isOpen));
+    }
+    header.addEventListener('click', toggle);
+    header.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+  });
 }
 
 function renderSkills() {
-  const bar = (s) => `
-    <div class="skill-item">
-      <span class="skill-name">${s.name}</span>
-      <div class="skill-bar-wrap"><div class="skill-bar" style="--bar-w:${s.pct}%"></div></div>
-    </div>`;
-
-  const tagsHtml = SKILLS.also.map(t => `<span class="skill-tag">${t}</span>`).join('');
-
-  const html = `
+  const groupsHtml = SKILLS.groups.map(g => `
     <div class="skill-group">
-      <h3>Professional</h3>
-      ${SKILLS.professional.map(bar).join('')}
-    </div>
-    <div class="skill-group">
-      <h3>Technical</h3>
-      ${SKILLS.technical.map(bar).join('')}
-      <div class="skill-also">
-        <div class="skill-also-label">Also familiar with</div>
-        <div class="skill-tags">${tagsHtml}</div>
+      <div class="skill-group-header">
+        <h3>${g.category}</h3>
+        <div class="skill-group-proof">${g.proof}</div>
       </div>
-    </div>`;
-  document.getElementById('skillsLayout').innerHTML = html;
+      <div class="skill-tags">${g.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}</div>
+    </div>`).join('');
+
+  document.getElementById('skillsLayout').innerHTML = `<div class="skills-groups">${groupsHtml}</div>`;
 
   const langHtml = LANGUAGES.map(l => `
     <div class="lang-card">
@@ -284,7 +297,7 @@ function closeNav() {
   // Skip on touch-primary devices - native momentum is already great there
   if (window.matchMedia('(hover: none)').matches) return;
 
-  const LERP = 0.075; // lower = more lag / silkier (0.05–0.12 is a good range)
+  const LERP = 0.14; // snappier feel, less lag on trackpad
 
   // Build the scroller wrapper
   const scroller = document.createElement('div');
@@ -562,8 +575,12 @@ function closeNav() {
     const valueToCopy  = type === 'email' ? buildEmail() : buildPhoneRaw();
     const displayValue = type === 'email' ? buildEmail() : formatPhoneDisplay(buildPhoneRaw());
     copyToClipboard(valueToCopy);
+
+    // Remove hint styling from BOTH fields — once either is clicked, both are revealed
+    document.getElementById('emailVal').classList.remove('contact-hidden');
+    document.getElementById('phoneVal').classList.remove('contact-hidden');
+
     const el = document.getElementById(type === 'email' ? 'emailVal' : 'phoneVal');
-    el.classList.remove('contact-hidden');
     el.classList.add('contact-revealed', 'contact-copied-feedback');
     el.textContent = 'Copied! ✓';
     clearTimeout(el._copyTimer);
@@ -617,4 +634,49 @@ document.querySelectorAll('.stat-card, .case-card').forEach(card => {
 (function() {
   const avatar = document.getElementById('liAvatar');
   if (avatar) avatar.src = 'data:image/png;base64,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';
+})();
+
+// ── BACK TO TOP + SCROLL PROGRESS ────────────────────────────────────────────
+
+(function () {
+  // Inject elements
+  const btn = document.createElement('button');
+  btn.id = 'back-to-top';
+  btn.setAttribute('aria-label', 'Back to top');
+  btn.innerHTML = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="18 15 12 9 6 15"></polyline></svg>`;
+  document.body.appendChild(btn);
+
+  const bar = document.createElement('div');
+  bar.id = 'scroll-progress';
+  document.body.appendChild(bar);
+
+  const skip = document.createElement('a');
+  skip.href = '#accomplishments';
+  skip.className = 'skip-link';
+  skip.textContent = 'Skip to content';
+  document.body.prepend(skip);
+
+  // Scroll handler
+  const SHOW_AFTER = 500;
+
+  function onScroll() {
+    const scrollY   = window.scrollY || window.pageYOffset;
+    const docH      = document.documentElement.scrollHeight - window.innerHeight;
+    const pct       = docH > 0 ? (scrollY / docH) * 100 : 0;
+
+    bar.style.width = pct.toFixed(1) + '%';
+
+    if (scrollY > SHOW_AFTER) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 })();
