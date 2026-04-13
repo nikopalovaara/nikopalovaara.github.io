@@ -219,7 +219,7 @@ function renderTimeline() {
     </div>`).join('');
   document.getElementById('timeline').innerHTML = html;
 
-  // Accordion behaviour — only active on mobile
+  // Accordion behaviour - only active on mobile
   document.querySelectorAll('.timeline-header').forEach(header => {
     function toggle() {
       if (window.innerWidth > 700) return; // desktop: always open
@@ -576,7 +576,7 @@ function closeNav() {
     const displayValue = type === 'email' ? buildEmail() : formatPhoneDisplay(buildPhoneRaw());
     copyToClipboard(valueToCopy);
 
-    // Remove hint styling from BOTH fields — once either is clicked, both are revealed
+    // Remove hint styling from BOTH fields - once either is clicked, both are revealed
     document.getElementById('emailVal').classList.remove('contact-hidden');
     document.getElementById('phoneVal').classList.remove('contact-hidden');
 
@@ -679,4 +679,41 @@ document.querySelectorAll('.stat-card, .case-card').forEach(card => {
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // ── HERO WELCOME TYPEWRITER ─────────────────────────────────────────────────
+
+(function () {
+  const photoWrap = document.querySelector('.hero-photo-wrap');
+  if (!photoWrap) return;
+
+  // Wrap photo + message in a flex row so text sits beside the photo
+  const photoCol = photoWrap.parentElement;
+  photoCol.classList.add('hero-photo-col--with-welcome');
+
+  const el = document.createElement('div');
+  el.className = 'hero-welcome';
+  el.innerHTML = '<span class="hero-welcome-text"></span><span class="hero-welcome-cursor"></span>';
+  photoCol.appendChild(el);
+
+  const text   = 'Hi, I\'m Niko. Welcome - have a look around, it\'s a 3 minute read.';
+  const target = el.querySelector('.hero-welcome-text');
+  const cursor = el.querySelector('.hero-welcome-cursor');
+  let i = 0;
+
+  setTimeout(() => {
+    el.classList.add('visible');
+    const interval = setInterval(() => {
+      target.textContent += text[i++];
+      if (i >= text.length) {
+        clearInterval(interval);
+        // remove blink animation then fade out
+        setTimeout(() => {
+          cursor.style.animation = 'none';
+          cursor.style.transition = 'opacity 1s';
+          cursor.style.opacity = '0';
+        }, 2000);
+      }
+    }, 38);
+  }, 800); // slight delay so it doesn't fire before the page settles
+})();
 })();

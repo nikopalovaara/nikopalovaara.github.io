@@ -141,6 +141,52 @@ nav {
 
 .hero-photo:hover { filter: grayscale(0%); }
 
+.hero-welcome {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--ink-muted);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  min-height: 1.4em;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+.hero-welcome.visible { opacity: 1; }
+
+/* text and cursor are both inline so cursor trails the text naturally */
+.hero-welcome-text {
+  display: inline;
+}
+
+.hero-welcome-cursor {
+  display: inline-block;
+  width: 1.5px;
+  height: 0.85em;
+  background: var(--accent);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: blink 0.9s step-end infinite;
+  will-change: opacity;
+}
+
+/* Layout: photo + welcome message side by side */
+.hero-photo-col--with-welcome {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.hero-photo-col--with-welcome .hero-welcome {
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 22ch;
+  flex-shrink: 0;
+}
+
 .hero-label {
   display: inline-flex;
   align-items: center;
@@ -408,7 +454,7 @@ section.section--dark .lang-level { color: var(--dark-muted); }
   user-select: none;
 }
 
-/* Chevron toggle — hidden on desktop */
+/* Chevron toggle - hidden on desktop */
 .timeline-toggle {
   display: none;
   width: 20px;
@@ -432,13 +478,13 @@ section.section--dark .lang-level { color: var(--dark-muted); }
 .timeline-toggle::before { left: 1px;  transform: translateY(-50%) rotate(45deg); }
 .timeline-toggle::after  { right: 1px; transform: translateY(-50%) rotate(-45deg); }
 
-/* Open state — chevron points up */
+/* Open state - chevron points up */
 .timeline-header[aria-expanded="true"] .timeline-toggle::before { transform: translateY(-50%) rotate(-45deg); }
 .timeline-header[aria-expanded="true"] .timeline-toggle::after  { transform: translateY(-50%) rotate(45deg); }
 
 /* Body is always visible on desktop */
 .timeline-body {
-  /* normal block — no collapse on desktop */
+  /* normal block - no collapse on desktop */
 }
 
 .timeline-body-inner {
@@ -1090,6 +1136,11 @@ footer a:hover { color: var(--accent); }
   .referrals-grid { grid-template-columns: 1fr; }
 }
 
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
 /* ═══════════════════════════════════════════
    VISUAL EFFECTS
    ═══════════════════════════════════════════ */
@@ -1368,7 +1419,7 @@ section { transition: none; }
   transition: none;
 }
 
-/* Old CSS stagger overrides — now handled by .will-reveal */
+/* Old CSS stagger overrides - now handled by .will-reveal */
 .fade-in.visible .timeline-item { opacity: 1; transform: none; transition-delay: 0s; }
 .fade-in.visible .referral-card { opacity: 1; transform: none; transition-delay: 0s; }
 
