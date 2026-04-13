@@ -165,10 +165,12 @@ nav {
 .hero-welcome-cursor {
   display: inline-block;
   width: 1.5px;
-  height: 0.85em;
+  height: 0.75em;
   background: var(--accent);
   margin-left: 1px;
-  vertical-align: text-bottom;
+  vertical-align: middle;
+  position: relative;
+  top: -0.05em;
   animation: blink 0.9s step-end infinite;
   will-change: opacity;
 }
