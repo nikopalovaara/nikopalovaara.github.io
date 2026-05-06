@@ -35,7 +35,7 @@ const CASES = [
   },
   {
     tag:    'Ongoing',
-    title:  'Building a startup as a founder around a ERP SaaS system from scratch',
+    title:  'Building a startup as a founder around SaaS system from scratch',
     body:   'Translated an idea into a product and business by working with domain experts to find product-market fit, assembling the right team, and successfully communicating the vision to investors to raise initial funding.',
     result: 'From idea to funded product - with paying customers in the pipeline.',
   },
