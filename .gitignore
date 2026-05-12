@@ -1,0 +1,6 @@
+node_modules/
+package-lock.json
+optimize-images.js
+package.json
+fetch-fonts.js
+worker/
